@@ -74,11 +74,13 @@ public class TripApplication implements TripFacade {
     @Transactional
     public Trip cancel(final CancelTripCommand command) {
         final Trip trip = tripRepository.findById(command.getId());
-        tripService.cancelTrip(trip);
+        final Trip cancelledTrip = tripService.cancelTrip(trip);
 
-        return tripRepository.update(trip);
+        return tripRepository.update(cancelledTrip);
     }
 
+    @Override
+    @Transactional
     public Trip updateAttendees(final UpdateTripCommand command) {
         final Trip.Essence essence = tripEssenceMapper.updateTripCommandToTripEssence(command);
 

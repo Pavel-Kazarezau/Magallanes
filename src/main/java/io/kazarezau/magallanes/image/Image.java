@@ -2,9 +2,11 @@ package io.kazarezau.magallanes.image;
 
 import io.kazarezau.magallanes.core.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.ValueObject;
 import org.jmolecules.ddd.types.Identifier;
@@ -16,6 +18,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Image extends BaseEntity<Image.ImageId> {
 
     private String name;

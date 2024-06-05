@@ -1,14 +1,15 @@
 package io.kazarezau.magallanes.trip.service;
 
 import io.kazarezau.magallanes.account.User;
-import io.kazarezau.magallanes.core.countries.CountriesService;
+import io.kazarezau.magallanes.core.CountriesService;
+import io.kazarezau.magallanes.trip.UnsupportedPointException;
 import io.kazarezau.magallanes.trip.Trip;
 import io.kazarezau.magallanes.trip.TripUnavailableException;
-import io.kazarezau.magallanes.trip.event.TripAttendeesAddedEvent;
-import io.kazarezau.magallanes.trip.event.TripAttendeesRemovedEvent;
-import io.kazarezau.magallanes.trip.event.TripCancelledEvent;
-import io.kazarezau.magallanes.trip.event.TripCreatedEvent;
-import io.kazarezau.magallanes.trip.event.TripRescheduledEvent;
+import io.kazarezau.magallanes.trip.TripAttendeesAddedEvent;
+import io.kazarezau.magallanes.trip.TripAttendeesRemovedEvent;
+import io.kazarezau.magallanes.trip.TripCancelledEvent;
+import io.kazarezau.magallanes.trip.TripCreatedEvent;
+import io.kazarezau.magallanes.trip.TripRescheduledEvent;
 import io.kazarezau.magallanes.trip.validation.TripAttendeeValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -34,7 +35,7 @@ public class TripServiceImpl implements TripService {
         final String city = Objects.requireNonNull(essence.getCity());
 
         if (!countriesService.containsCountryAndCity(country, city)) {
-            throw new IllegalStateException();
+            throw new UnsupportedPointException("This country and city does not exist");
         }
 
         final Trip createdTrip = new Trip(essence);
@@ -54,12 +55,13 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void cancelTrip(final Trip trip) {
+    public Trip cancelTrip(final Trip trip) {
         if (!tripAttendeeValidator.isCurrentUserACreator(trip)) {
             throw new TripUnavailableException();
         }
         trip.cancel();
         eventPublisher.publishEvent(TripCancelledEvent.builder().trip(trip).build());
+        return trip;
     }
 
     @Override

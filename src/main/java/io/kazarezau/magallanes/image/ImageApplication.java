@@ -5,7 +5,6 @@ import io.kazarezau.magallanes.image.input.command.CreateImageCommand;
 import io.kazarezau.magallanes.image.input.command.FindByPointCommand;
 import io.kazarezau.magallanes.image.input.mapper.ImageEssenceMapper;
 import io.kazarezau.magallanes.image.output.repository.ImageRepository;
-import io.kazarezau.magallanes.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.architecture.hexagonal.Application;
 import org.springframework.data.domain.Page;

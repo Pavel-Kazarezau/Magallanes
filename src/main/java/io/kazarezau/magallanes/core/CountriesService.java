@@ -1,4 +1,4 @@
-package io.kazarezau.magallanes.core.countries;
+package io.kazarezau.magallanes.core;
 
 public interface CountriesService {
 

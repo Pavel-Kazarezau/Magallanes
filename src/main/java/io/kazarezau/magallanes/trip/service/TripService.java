@@ -10,7 +10,7 @@ public interface TripService {
 
     Trip rescheduleTrip(Trip trip, Trip.Essence essence);
 
-    void cancelTrip(Trip trip);
+    Trip cancelTrip(Trip trip);
 
     Trip updateAttendees(Trip trip, Trip.Essence essence);
 

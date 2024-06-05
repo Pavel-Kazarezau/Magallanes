@@ -1,7 +1,6 @@
-package io.kazarezau.magallanes.trip.event;
+package io.kazarezau.magallanes.trip;
 
 import io.kazarezau.magallanes.account.User;
-import io.kazarezau.magallanes.trip.Trip;
 import lombok.Builder;
 import lombok.Data;
 

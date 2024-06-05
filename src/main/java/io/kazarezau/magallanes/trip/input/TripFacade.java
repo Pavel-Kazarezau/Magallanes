@@ -7,7 +7,6 @@ import io.kazarezau.magallanes.trip.input.command.FindTripCommand;
 import io.kazarezau.magallanes.trip.input.command.FindWithFilteringTripCommand;
 import io.kazarezau.magallanes.trip.input.command.UpdateTripCommand;
 import org.jmolecules.architecture.hexagonal.PrimaryPort;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -24,4 +23,6 @@ public interface TripFacade {
     Trip reschedule(UpdateTripCommand command);
 
     Trip cancel(CancelTripCommand command);
+
+    Trip updateAttendees(final UpdateTripCommand command);
 }

@@ -1,6 +1,5 @@
-package io.kazarezau.magallanes.image.service;
+package io.kazarezau.magallanes.image;
 
-import io.kazarezau.magallanes.image.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

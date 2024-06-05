@@ -2,8 +2,8 @@ package io.kazarezau.magallanes.notification.listener;
 
 import io.kazarezau.magallanes.notification.templates.NotificationTitles;
 import io.kazarezau.magallanes.notification.templates.TripNotification;
-import io.kazarezau.magallanes.trip.event.TripCreatedEvent;
-import io.kazarezau.magallanes.trip.event.TripRescheduledEvent;
+import io.kazarezau.magallanes.trip.TripCreatedEvent;
+import io.kazarezau.magallanes.trip.TripRescheduledEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties;

@@ -1,5 +1,6 @@
 package io.kazarezau.magallanes.core.countries;
 
+import io.kazarezau.magallanes.core.CountriesService;
 import io.kazarezau.magallanes.core.countries.model.CountryModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

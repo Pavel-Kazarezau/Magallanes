@@ -5,6 +5,7 @@ import freemarker.template.Template;
 import io.kazarezau.magallanes.email.config.MailConfig;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +29,15 @@ public class EmailServiceImpl implements EmailService {
     @SneakyThrows
     @Override
     public void send(final List<String> to, final EmailMessage emailMessage) {
-        final String address = to.get(0);
-        final InternetAddress internetAddress = new InternetAddress(address);
-        InternetAddress[] singleton = {internetAddress};
+        final InternetAddress[] addresses = to.stream()
+                .map(el -> {
+                    try {
+                        return new InternetAddress(el);
+                    } catch (AddressException e) {
+                        throw new EmailException("Error converting email address", e);
+                    }
+                })
+                .toArray(InternetAddress[]::new);
 
         final Template template = configuration.getTemplate(emailMessage.getTemplate().getName());
         final StringWriter stringWriter = new StringWriter();
@@ -38,7 +45,7 @@ public class EmailServiceImpl implements EmailService {
         final String body = stringWriter.toString();
 
         final MimeMessage mimeMessage = mailSender.createMimeMessage();
-        mimeMessage.setRecipients(Message.RecipientType.TO, singleton);
+        mimeMessage.setRecipients(Message.RecipientType.TO, addresses);
         mimeMessage.setFrom(mailConfig.getUsername());
         mimeMessage.setSubject(emailMessage.getSubject());
         mimeMessage.setText(body);

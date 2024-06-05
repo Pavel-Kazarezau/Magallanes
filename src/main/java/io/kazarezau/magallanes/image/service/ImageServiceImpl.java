@@ -1,7 +1,9 @@
 package io.kazarezau.magallanes.image.service;
 
-import io.kazarezau.magallanes.core.countries.CountriesService;
+import io.kazarezau.magallanes.core.CountriesService;
 import io.kazarezau.magallanes.image.Image;
+import io.kazarezau.magallanes.image.ImageLocationNotFound;
+import io.kazarezau.magallanes.image.ImageService;
 import io.kazarezau.magallanes.image.output.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
         final String city = Objects.requireNonNull(essence.getCity());
 
         if (!countriesService.containsCountryAndCity(country, city)) {
-            throw new IllegalStateException();
+            throw new ImageLocationNotFound("Country or city does not exist");
         }
 
         final Image image = new Image(essence);

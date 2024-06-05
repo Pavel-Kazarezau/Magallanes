@@ -5,10 +5,11 @@ import io.kazarezau.magallanes.email.EmailService;
 import io.kazarezau.magallanes.email.UserEmailExtractor;
 import io.kazarezau.magallanes.email.ics.IcsService;
 import io.kazarezau.magallanes.trip.Trip;
-import io.kazarezau.magallanes.trip.event.TripAttendeesAddedEvent;
-import io.kazarezau.magallanes.trip.event.TripCancelledEvent;
-import io.kazarezau.magallanes.trip.event.TripCreatedEvent;
-import io.kazarezau.magallanes.trip.event.TripRescheduledEvent;
+import io.kazarezau.magallanes.trip.TripAttendeesAddedEvent;
+import io.kazarezau.magallanes.trip.TripAttendeesRemovedEvent;
+import io.kazarezau.magallanes.trip.TripCancelledEvent;
+import io.kazarezau.magallanes.trip.TripCreatedEvent;
+import io.kazarezau.magallanes.trip.TripRescheduledEvent;
 import jakarta.mail.util.ByteArrayDataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.modulith.events.ApplicationModuleListener;
@@ -131,7 +132,7 @@ public class TripEmailHandler {
     }
 
     @ApplicationModuleListener
-    void onAttendeeRemoved(TripAttendeesAddedEvent event) {
+    void onAttendeeRemoved(TripAttendeesRemovedEvent event) {
         final Trip trip = event.getTrip();
         final String city = trip.getPoint().city();
         final String country = trip.getPoint().country();

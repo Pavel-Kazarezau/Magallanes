@@ -3,9 +3,11 @@ package io.kazarezau.magallanes.trip;
 import io.kazarezau.magallanes.account.User;
 import io.kazarezau.magallanes.core.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.ValueObject;
 import org.jmolecules.ddd.types.Identifier;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +27,8 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public final class Trip extends BaseEntity<Trip.TripId> {
 
     private String name;
@@ -70,7 +75,12 @@ public final class Trip extends BaseEntity<Trip.TripId> {
         } else {
             this.attendees = new HashSet<>();
         }
-        this.attendees.add(new User.UserId(essence.creatorId));
+        this.attendees.add(Optional.ofNullable(this.creatorId)
+                .orElse(new User.UserId(essence.creatorId)));
+    }
+
+    void setAttendees(Set<User.UserId> attendees) {
+        this.attendees = attendees;
     }
 
     public void reschedule(final Essence essence) {
@@ -116,6 +126,5 @@ public final class Trip extends BaseEntity<Trip.TripId> {
         private String city;
         private LocalDate startDate;
         private LocalDate endDate;
-        private TripStatus tripStatus;
     }
 }
